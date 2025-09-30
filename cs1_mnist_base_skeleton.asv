@@ -31,7 +31,7 @@ train(:,785)=zeros(1500,1);             %Sets the "answer keys" to zero
 test=csvread('mnist_test_200_woutliers.csv');
 % store the correct test labels
 correctlabels = test(:,785);            %correct test labels
-test=test(:,1:784);                     %Actual array of grayscale values
+test=test(:,1:784);%Actual array of grayscale values
 %[numRowsTest, numColsTest] = size(test);
 %test = zeros(numRowsTest, numColsTest);
 
@@ -64,8 +64,8 @@ imagesc(testimage'); % this command plots an array as an image.  Type 'help imag
 
 %% This next section of code calls the three functions you are asked to specify
 
-k= 15; % set k <I set it k to 5 and the iteration to 8 randomly
-max_iter= 30; % set the number of iterations of the algorithm
+k= 20; % set k <I set it k to 5 and the iteration to 8 randomly
+max_iter= 50; % set the number of iterations of the algorithm
 
 %% The next line initializes the centroids.  Look at the initialize_centroids()
 % function, which is specified further down this file.
@@ -83,7 +83,7 @@ for iter=1:max_iter
           % function 3
           [idx, cost] = assign_vector_to_centroid(train(i,:),centroids);
           train(i,785)= idx;    %assigns predicted label to image
-          cost_iteration (i,:) = cost_iteration (i,:) + cost;   %vertical axis values
+          cost_iteration(iter,:) = cost_iteration(iter,:) + cost;   %vertical axis values
       end
 centroids = update_Centroids(train, k);
       % End of DJ's Work ^^%
@@ -95,7 +95,7 @@ end
 % of iterations
 
 figure;
-plot(max_iter,cost_iteration);
+plot(cost_iteration);
 
 
 %% This next section of code will make a plot of all of the centroids
@@ -141,34 +141,13 @@ end
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
 
-%comparison = 10000000000000;
-%num_centroid = 1;
-%for i = 1: size(centroids,1)
-%for c = 1: train
-   % currentCentroid = centroids(c,:);
-  %  distance = norm(data - currentCentroid);
- %   distances(c) = distance;
-
-%end
-   % current_distance = norm(data(1:784) - centroids(i, [1:784]),2)^2; 
-  %  if   current_distance <= comparison
-  %      comparison = current_distance;
-  %      num_centroid = i;
- %   end    
-
-%end
-%index = num_centroid; 
-%vec_distance= comparison;
-%%
-
-
  data_vector = data(1:784);
     comparison = 10000000000000;
     index = 1;
-    
-    for i = 1:size(centroids,1)
-        centroid_vec = centroids(i,1:784);
-        current_distance = norm(data_vector - centroid_vec,2)^2;
+
+    for i = 1:size(centroids,1)          %goes from 1 to number of rows of centroids (aka the random images)
+        centroid_vector = centroids(i,1:784);
+        current_distance = norm(data_vector - centroid_vector)^2;
 
         if current_distance < comparison
             comparison = current_distance;
@@ -191,12 +170,13 @@ function new_centroids=update_Centroids(data,K)
 
 new_centroids = zeros(K,784);
 for j = 1:(K)
-    cluster = data(data(:,785) == j, :);
+    cluster = data(data(:,785) == j, 1:784);
 
-    mean_cluster = mean(cluster);
+    mean_cluster = mean(cluster,1);
 
     new_centroids(j,:) = mean_cluster;
 
 end
 
 end
+

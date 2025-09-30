@@ -31,7 +31,7 @@ train(:,785)=zeros(1500,1);             %Sets the "answer keys" to zero
 test=csvread('mnist_test_200_woutliers.csv');
 % store the correct test labels
 correctlabels = test(:,785);            %correct test labels
-test=test(:,1:784);                     %Actual array of grayscale values
+test=test(:,1:784);%Actual array of grayscale values
 %[numRowsTest, numColsTest] = size(test);
 %test = zeros(numRowsTest, numColsTest);
 
