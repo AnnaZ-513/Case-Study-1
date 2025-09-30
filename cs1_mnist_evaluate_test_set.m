@@ -50,9 +50,5 @@ title('Predictions');
 sum(correctlabels==predictions)
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
-% FILL IN
-end
-
-for i=1:k
 
 end

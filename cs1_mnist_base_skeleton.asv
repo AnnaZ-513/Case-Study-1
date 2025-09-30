@@ -64,8 +64,8 @@ imagesc(testimage'); % this command plots an array as an image.  Type 'help imag
 
 %% This next section of code calls the three functions you are asked to specify
 
-k= 20; % set k <I set it k to 5 and the iteration to 8 randomly
-max_iter= 50; % set the number of iterations of the algorithm
+k = 20; % set k <I set it k to 5 and the iteration to 8 randomly
+max_iter = 50; % set the number of iterations of the algorithm
 
 %% The next line initializes the centroids.  Look at the initialize_centroids()
 % function, which is specified further down this file.
@@ -78,6 +78,7 @@ cost_iteration = zeros(max_iter, 1);        %Gonna be our vertical axis but star
 
 %% This for-loop enacts the k-means algorithm
 
+
 for iter=1:max_iter
       for i= 1: length(train(:,1))
           % function 3
@@ -86,7 +87,6 @@ for iter=1:max_iter
           cost_iteration(iter,:) = cost_iteration(iter,:) + cost;   %vertical axis values
       end
 centroids = update_Centroids(train, k);
-      % End of DJ's Work ^^%
 
     
 end
@@ -123,6 +123,13 @@ end
 % There are other ways you might initialize centroids.
 % ***Feel free to experiment.***
 % Note that this function takes two inputs and emits one output (y).
+
+
+clusters=zeros(1)
+% for i=(1:k)
+    clustermodes=trainsetlabels(train(:,785)==1);
+    cluster(i,1)=mode(cluster1);
+%end
 
 function y=initialize_centroids(data,num_centroids)     % y is a matrix of num_centroids x n
 
