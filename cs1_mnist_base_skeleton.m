@@ -1,7 +1,7 @@
 
 clear all;
 close all;
-%HELLOOOOOOO
+
 %% In this script, you need to implement three functions as part of the k-means algorithm.
 % These steps will be repeated until the algorithm converges:
 
