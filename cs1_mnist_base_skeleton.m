@@ -64,8 +64,8 @@ imagesc(testimage'); % this command plots an array as an image.  Type 'help imag
 
 %% This next section of code calls the three functions you are asked to specify
 
-k= 15; % set k <I set it k to 5 and the iteration to 8 randomly
-max_iter= 30; % set the number of iterations of the algorithm
+k= 20; % set k <I set it k to 5 and the iteration to 8 randomly
+max_iter= 50; % set the number of iterations of the algorithm
 
 %% The next line initializes the centroids.  Look at the initialize_centroids()
 % function, which is specified further down this file.
@@ -74,7 +74,7 @@ centroids=initialize_centroids(train,k);
 
 %% Initialize an array that will store k-means cost at each iteration
 
-cost_iteration = zeros(max_iter, 1);        %Gonna be our vertical axis
+cost_iteration = zeros(max_iter, 1);        %Gonna be our vertical axis but starts out empty zeros
 
 %% This for-loop enacts the k-means algorithm
 
@@ -82,10 +82,10 @@ for iter=1:max_iter
       for i= 1: length(train(:,1))
           % function 3
           [idx, cost] = assign_vector_to_centroid(train(i,:),centroids);
-          train(i,785)= idx;
-          cost_iteration (i,:) = cost_iteration (i,:) + cost;
+          train(i,785)= idx;    %assigns predicted label to image
+          cost_iteration(iter,:) = cost_iteration(iter,:) + cost;   %vertical axis values
       end
-centroids = update_Centroids (train, k);
+centroids = update_Centroids(train, k);
       % End of DJ's Work ^^%
 
     
@@ -95,7 +95,6 @@ end
 % of iterations
 
 figure;
-
 plot(cost_iteration);
 
 
@@ -125,7 +124,7 @@ end
 % ***Feel free to experiment.***
 % Note that this function takes two inputs and emits one output (y).
 
-function y=initialize_centroids(data,num_centroids)
+function y=initialize_centroids(data,num_centroids)     % y is a matrix of num_centroids x n
 
 random_index=randperm(size(data,1));
 
@@ -142,24 +141,22 @@ end
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
 
-comparison = 10000000000000;
-num_centroid = 1;
-for i = 1: size(centroids,1)
-for c = 1: train
-    currentCentroid = centroids(c,:);
-    distance = norm(data - currentCentroid);
-    distances(c) = distance;
+ data_vector = data(1:784);
+    comparison = 10000000000000;
+    index = 1;
 
-end
-    current_distance = norm(data(1:784) - centroids(i, [1:784]),2)^2; 
-    if   current_distance <= comparison
-        comparison = current_distance;
-        num_centroid = i;
-    end    
+    for i = 1:size(centroids,1)          %goes from 1 to number of rows of centroids (aka the random images)
+        centroid_vector = centroids(i,1:784);
+        current_distance = norm(data_vector - centroid_vector)^2;
 
-end
-index = num_centroid; 
-vec_distance= comparison;
+        if current_distance < comparison
+            comparison = current_distance;
+            index = i;
+        end
+    end
+
+    % Return the index and the squared distance
+    vec_distance = comparison;
 
 end
 
@@ -173,9 +170,9 @@ function new_centroids=update_Centroids(data,K)
 
 new_centroids = zeros(K,784);
 for j = 1:(K)
-    cluster = data(data(:,785) == j, :);
+    cluster = data(data(:,785) == j, 1:784);
 
-    mean_cluster = mean(cluster);
+    mean_cluster = mean(cluster,1);
 
     new_centroids(j,:) = mean_cluster;
 
