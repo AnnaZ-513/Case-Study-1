@@ -64,8 +64,8 @@ imagesc(testimage'); % this command plots an array as an image.  Type 'help imag
 
 %% This next section of code calls the three functions you are asked to specify
 
-k= 15; % set k <I set it k to 5 and the iteration to 8 randomly
-max_iter= 30; % set the number of iterations of the algorithm
+k= 20; % set k <I set it k to 5 and the iteration to 8 randomly
+max_iter= 50; % set the number of iterations of the algorithm
 
 %% The next line initializes the centroids.  Look at the initialize_centroids()
 % function, which is specified further down this file.
@@ -95,7 +95,7 @@ end
 % of iterations
 
 figure;
-plot(max_iter,cost_iteration);
+plot(cost_iteration);
 
 
 %% This next section of code will make a plot of all of the centroids
