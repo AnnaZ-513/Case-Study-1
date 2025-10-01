@@ -13,6 +13,7 @@
 % your submission.
 
 predictions = zeros(200,1);         %Column vectors of 200 
+all_distances = zeros(200,1);
 %outliers = zeros(200,1);
 % loop through the test set, figure out the predicted number
 all_distances = zeros(200,1);
@@ -31,14 +32,14 @@ end
 % otherwise, outliers(i) should be 0
 % FILL IN
 
-threshold = mean(all_distances) + 2*std(predictions);
-outliers = all_distances >= threshold;
+threshold = mean(all_distances) + 1.6*std(all_distances);
+outliers = all_distances > threshold;
 
 %% MAKE A STEM PLOT OF THE OUTLIER FLAG
 figure;
 stem(outliers,'filled');
-xlabel('Test Sample Index');
-ylabel('Outlier Flag');
+xlabel('Test Set Index');
+ylabel('Flag');
 title('Detected Outliers');
 
 %% The following plots the correct and incorrect predictions
@@ -48,6 +49,15 @@ plot(correctlabels,'o');
 hold on;
 plot(predictions,'x');
 title('Predictions');
+xlabel('Test Set Index');
+ylabel('Label');
+
+accurate = zeros(200,1);
+for i=1:200
+    accurate(i) = (correctlabels(i) == predictions(i));
+end
+
+percentAccuracy = (norm(accurate)^2)/size(accurate,1)
 
 %% The following line provides the number of instances where and entry in correctlabel is
 % equatl to the corresponding entry in prediction
