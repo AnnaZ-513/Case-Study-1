@@ -14,7 +14,6 @@
 
 predictions = zeros(200,1);         %Column vectors of 200 
 outliers = zeros(200,1);
-
 % loop through the test set, figure out the predicted number
 for i = 1:200
 
@@ -50,5 +49,5 @@ title('Predictions');
 sum(correctlabels==predictions)
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
-
+    
 end

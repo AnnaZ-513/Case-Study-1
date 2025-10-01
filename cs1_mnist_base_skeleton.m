@@ -64,7 +64,7 @@ imagesc(testimage'); % this command plots an array as an image.  Type 'help imag
 
 %% This next section of code calls the three functions you are asked to specify
 
-k = 20; % set k <I set it k to 5 and the iteration to 8 randomly
+k = 50; % set k <I set it k to 5 and the iteration to 8 randomly
 max_iter = 50; % set the number of iterations of the algorithm
 
 %% The next line initializes the centroids.  Look at the initialize_centroids()
@@ -125,10 +125,10 @@ end
 % Note that this function takes two inputs and emits one output (y).
 
 
-clusters=zeros(20,1);
+centroid_labels=zeros(20,1);
 for i=(1:k)
     clustermodes=trainsetlabels(train(:,785)==i);
-    clusters(i,1)=mode(clustermodes);
+    centroid_labels(i,1)=mode(clustermodes);
 end
 
 function y=initialize_centroids(data,num_centroids)     % y is a matrix of num_centroids x n
