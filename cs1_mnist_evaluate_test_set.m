@@ -15,10 +15,9 @@
 predictions = zeros(200,1);         %Column vectors of 200 
 %outliers = zeros(200,1);
 % loop through the test set, figure out the predicted number
-for i = 1:200
-
-testing_vector=test(i,:);
 all_distances = zeros(200,1);
+for i = 1:200
+testing_vector=test(i,:);
 % Extract the centroid that is closest to the test image
 [prediction_index, vec_distance]=assign_vector_to_centroid(testing_vector,centroids);
 
