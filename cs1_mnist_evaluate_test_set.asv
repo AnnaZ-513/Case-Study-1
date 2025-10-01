@@ -12,7 +12,7 @@
 % You should save 1) and 2) in a file named 'classifierdata.mat' as part of
 % your submission.
 
-predictions = zeros(200,1);
+predictions = zeros(200,1);         %Column vectors of 200 
 outliers = zeros(200,1);
 centroids_label
 % loop through the test set, figure out the predicted number
