@@ -13,16 +13,17 @@
 % your submission.
 
 predictions = zeros(200,1);         %Column vectors of 200 
-outliers = zeros(200,1);
+all_distances = zeros(200,1);
+%outliers = zeros(200,1);
 % loop through the test set, figure out the predicted number
 for i = 1:200
 
 testing_vector=test(i,:);
-
 % Extract the centroid that is closest to the test image
 [prediction_index, vec_distance]=assign_vector_to_centroid(testing_vector,centroids);
 
 predictions(i) = centroid_labels(prediction_index);
+all_distances(i) = vec_distance;
 
 end
 
@@ -30,13 +31,16 @@ end
 % outliers(i) should be set to 1 if the i^th entry is an outlier
 % otherwise, outliers(i) should be 0
 % FILL IN
-outlier_indices = zeros()
-for i=1:200
 
+threshold = mean(all_distances) + 1.6*std(all_distances);
+outliers = all_distances > threshold;
 
 %% MAKE A STEM PLOT OF THE OUTLIER FLAG
 figure;
-% FILL IN
+stem(outliers,'filled');
+xlabel('Test Set Index');
+ylabel('Flag');
+title('Detected Outliers');
 
 %% The following plots the correct and incorrect predictions
 % Make sure you understand how this plot is constructed
@@ -45,6 +49,14 @@ plot(correctlabels,'o');
 hold on;
 plot(predictions,'x');
 title('Predictions');
+xlabel('Test Set Index');
+ylabel('Label');
+
+accurate = zeros(200,1);
+for i=1:size(correctlabels,1)
+    accurate = (correctlabels(i) == predictions(i));
+end
+sz = size(correctlabels,1)
 
 %% The following line provides the number of instances where and entry in correctlabel is
 % equatl to the corresponding entry in prediction
