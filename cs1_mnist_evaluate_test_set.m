@@ -13,16 +13,17 @@
 % your submission.
 
 predictions = zeros(200,1);         %Column vectors of 200 
-outliers = zeros(200,1);
+%outliers = zeros(200,1);
 % loop through the test set, figure out the predicted number
 for i = 1:200
 
 testing_vector=test(i,:);
-
+all_distances = zeros(200,1);
 % Extract the centroid that is closest to the test image
 [prediction_index, vec_distance]=assign_vector_to_centroid(testing_vector,centroids);
 
 predictions(i) = centroid_labels(prediction_index);
+all_distances(i) = vec_distance;
 
 end
 
@@ -31,9 +32,15 @@ end
 % otherwise, outliers(i) should be 0
 % FILL IN
 
+threshold = mean(all_distances) + 2*std(predictions);
+outliers = all_distances >= threshold;
+
 %% MAKE A STEM PLOT OF THE OUTLIER FLAG
 figure;
-% FILL IN
+stem(outliers,'filled');
+xlabel('Test Sample Index');
+ylabel('Outlier Flag');
+title('Detected Outliers');
 
 %% The following plots the correct and incorrect predictions
 % Make sure you understand how this plot is constructed
@@ -49,5 +56,21 @@ title('Predictions');
 sum(correctlabels==predictions)
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
-    
+    data_vector = reshape(data(1:784), 1, 784);
+
+    comparison = 10000000000000;
+    index = 1;
+
+    for i = 1:size(centroids,1)          %goes from 1 to number of rows of centroids (aka the random images)
+        centroid_vector = centroids(i,1:784);
+        current_distance = norm(data_vector - centroid_vector)^2;
+
+        if current_distance < comparison
+            comparison = current_distance;
+            index = i;
+        end
+    end
+
+    % Return the index and the squared distance
+    vec_distance = comparison;
 end

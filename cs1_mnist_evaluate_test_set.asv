@@ -14,7 +14,6 @@
 
 predictions = zeros(200,1);         %Column vectors of 200 
 outliers = zeros(200,1);
-centroids_label
 % loop through the test set, figure out the predicted number
 for i = 1:200
 
@@ -31,6 +30,9 @@ end
 % outliers(i) should be set to 1 if the i^th entry is an outlier
 % otherwise, outliers(i) should be 0
 % FILL IN
+outlier_indices = zeros()
+for i=1:200
+
 
 %% MAKE A STEM PLOT OF THE OUTLIER FLAG
 figure;
@@ -50,5 +52,21 @@ title('Predictions');
 sum(correctlabels==predictions)
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
-    
+    data_vector = reshape(data(1:784), 1, 784);
+
+    comparison = 10000000000000;
+    index = 1;
+
+    for i = 1:size(centroids,1)          %goes from 1 to number of rows of centroids (aka the random images)
+        centroid_vector = centroids(i,1:784);
+        current_distance = norm(data_vector - centroid_vector)^2;
+
+        if current_distance < comparison
+            comparison = current_distance;
+            index = i;
+        end
+    end
+
+    % Return the index and the squared distance
+    vec_distance = comparison;
 end

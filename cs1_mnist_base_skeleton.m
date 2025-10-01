@@ -125,7 +125,7 @@ end
 % Note that this function takes two inputs and emits one output (y).
 
 
-centroid_labels=zeros(20,1);
+centroid_labels=zeros(k,1);
 for i=(1:k)
     clustermodes=trainsetlabels(train(:,785)==i);
     centroid_labels(i,1)=mode(clustermodes);
@@ -148,7 +148,8 @@ end
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
 
- data_vector = data(1:784);
+    data_vector = reshape(data(1:784), 1, 784);
+
     comparison = 10000000000000;
     index = 1;
 
