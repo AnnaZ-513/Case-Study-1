@@ -16,7 +16,6 @@ predictions = zeros(200,1);         %Column vectors of 200
 all_distances = zeros(200,1);
 %outliers = zeros(200,1);
 % loop through the test set, figure out the predicted number
-all_distances = zeros(200,1);
 for i = 1:200
 testing_vector=test(i,:);
 % Extract the centroid that is closest to the test image
@@ -83,3 +82,5 @@ function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
     % Return the index and the squared distance
     vec_distance = comparison;
 end
+
+save('classifierdata.mat',"centroid_labels","centroids")
