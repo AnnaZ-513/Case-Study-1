@@ -31,7 +31,7 @@ end
 % otherwise, outliers(i) should be 0
 % FILL IN
 
-threshold = mean(all_distances) + 1.6*std(all_distances);
+threshold = mean(all_distances) + 1.74*std(all_distances);
 outliers = all_distances > threshold;
 
 %% MAKE A STEM PLOT OF THE OUTLIER FLAG
