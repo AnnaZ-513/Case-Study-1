@@ -82,7 +82,7 @@ cost_iteration = zeros(max_iter, 1);        %Gonna be our vertical axis but star
 
 for iter=1:max_iter
       for i= 1: length(train(:,1))
-          % function 3
+          % function 3a
           [idx, cost] = assign_vector_to_centroid(train(i,:),centroids);
           train(i,785)= idx;    %assigns predicted label to image
           cost_iteration(iter,:) = cost_iteration(iter,:) + cost;   %vertical axis values
@@ -97,7 +97,9 @@ end
 
 figure;
 plot(cost_iteration);
-
+xlabel('Iteration');
+ylabel('Cost');
+title('K-means Cost');
 
 %% This next section of code will make a plot of all of the centroids
 % Again, use help <functionname> to learn about the different functions

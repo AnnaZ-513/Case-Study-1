@@ -51,17 +51,12 @@ title('Predictions');
 xlabel('Test Set Index');
 ylabel('Label');
 
-accurate = zeros(200,1);
-for i=1:200
-    accurate(i) = (correctlabels(i) == predictions(i));
-end
 
-percentAccuracy = (norm(accurate)^2)/size(accurate,1)
-
-%% The following line provides the number of instances where and entry in correctlabel is
+%% The following line provides the number of instances where an entry in correctlabel is
 % equatl to the corresponding entry in prediction
 % However, remember that some of these are outliers
-sum(correctlabels==predictions)
+summ = sum(correctlabels==predictions);
+percentAccuracy = summ/size(correctlabels,1) * 100
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
     data_vector = reshape(data(1:784), 1, 784);
