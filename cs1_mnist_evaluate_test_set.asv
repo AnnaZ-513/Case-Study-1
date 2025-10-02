@@ -16,14 +16,12 @@ predictions = zeros(200,1);         %Column vectors of 200
 all_distances = zeros(200,1);
 %outliers = zeros(200,1);
 % loop through the test set, figure out the predicted number
-all_distances = zeros(200,1);
 for i = 1:200
 testing_vector=test(i,:);
 % Extract the centroid that is closest to the test image
 [prediction_index, vec_distance]=assign_vector_to_centroid(testing_vector,centroids);
 
 predictions(i) = centroid_labels(prediction_index);
-all_distances(i) = vec_distance;
 all_distances(i) = vec_distance;
 
 end
@@ -53,16 +51,13 @@ title('Predictions');
 xlabel('Test Set Index');
 ylabel('Label');
 
-accurate = zeros(200,1);
-for i=1:size(correctlabels,1)
-    accurate = (correctlabels(i) == predictions(i));
-end
-sz = size(correctlabels,1)
+
 
 %% The following line provides the number of instances where and entry in correctlabel is
 % equatl to the corresponding entry in prediction
 % However, remember that some of these are outliers
-sum(correctlabels==predictions)
+summ = sum(correctlabels==predictions);
+percentAccuracy = dot(summ,summ)/size(summ,1)
 
 function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
     data_vector = reshape(data(1:784), 1, 784);
@@ -83,3 +78,5 @@ function [index, vec_distance] = assign_vector_to_centroid(data,centroids)
     % Return the index and the squared distance
     vec_distance = comparison;
 end
+
+save('classifierdata.mat',"centroid_labels","centroids")
